@@ -1,0 +1,466 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 10px 20px;
+}
+
+.logo {
+  color: #ecf0f1;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+nav > ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 10px 20px;
+}
+
+nav > ul > li {
+  display: inline;
+}
+
+nav > ul > li > a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+nav > ul > li > a:hover {
+  background-color: rgba(236, 240, 241, 0.2);
+}
+
+hr {
+  margin: 0;
+  border: none;
+  border-top: 2px solid #ccc;
+}
+
+h1 {
+  text-align: center;
+  margin: 0 0 20px 0;
+  font-size: 2.5rem;
+  color: #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.todo-form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.todo-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+  resize: none;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  margin-top: 30px;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  background-color: #fff;
+  padding: 25px 30px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  border-left: 5px solid #667eea;
+}
+
+.task-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  border-left-color: #764ba2;
+}
+
+.task-item h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.task-item p {
+  color: #666;
+  font-size: 1rem;
+  text-align: left;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.task-list:empty::before {
+  content: "No tasks yet. Add your first task!";
+  display: block;
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  color: #999;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.task-content {
+  margin-bottom: 15px;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.task-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  flex-shrink: 0;
+}
+
+.btn-delete:hover {
+  background: linear-gradient(135deg, #ff5252 0%, #e63946 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+.update-task {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8.5px 20px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 6px;
+  color: #fff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.update-task:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.task-actions button a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+.task-actions button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #667eea;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  flex-shrink: 0;
+}
+
+input[type="checkbox"]:hover {
+  border-color: #764ba2;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  transform: scale(1.05);
+}
+
+input[type="checkbox"]:checked {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type="checkbox"]:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 480px) {
+  .task-actions button,
+  .update-task {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .task-actions {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container h1 {
+    font-size: 2rem;
+    margin: 20px 0 30px 0;
+  }
+
+  .task-item {
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .task-item h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container h1 {
+    font-size: 1.75rem;
+  }
+
+  .task-item {
+    padding: 15px 20px;
+  }
+
+  .task-item h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .task-item p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .todo-form {
+    padding: 25px;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem;
+    margin: 20px 0;
+  }
+
+  .todo-form {
+    padding: 20px;
+  }
+
+  button[type="submit"] {
+    font-size: 1rem;
+    padding: 12px 20px;
+  }
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background-color: #fafafa;
+  margin-bottom: 20px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover {
+  border-color: #b0b0b0;
+}
+
+/* Paragraph with Link styling */
+p {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Styling for React Router Link component */
+p .link,
+p a[href] {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+p .link:hover,
+p a[href]:hover {
+  color: #764ba2;
+}
+
+p .link::after,
+p a[href]::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #764ba2;
+  transition: width 0.3s ease;
+}
+
+p .link:hover::after,
+p a[href]:hover::after {
+  width: 100%;
+}
+
+.auto-fade {
+  animation: fadeOut 5s ease forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.75; /* stay visible most of the time */
+  }
+  100% {
+    opacity: 0; /* fade at the end */
+  }
+}
