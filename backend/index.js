@@ -80,9 +80,9 @@ async function startServer() {
 
         resp.cookie("token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production", // true in production
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+          secure: true,
+          sameSite: "none",
+          maxAge: 24 * 60 * 60 * 1000,
         });
 
         resp.status(200).json({
@@ -128,9 +128,9 @@ async function startServer() {
 
         resp.cookie("token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production", // true in production
-          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+          secure: true,
+          sameSite: "none",
+          maxAge: 24 * 60 * 60 * 1000,
         });
 
         resp.status(200).json({
