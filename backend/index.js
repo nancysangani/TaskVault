@@ -50,7 +50,6 @@ async function startServer() {
             .json({ success: false, message: "All fields are required" });
         }
 
-        // Check if user exists
         const existingUser = await usersCollection.findOne({ email });
         if (existingUser) {
           return resp.status(409).json({
@@ -59,8 +58,10 @@ async function startServer() {
           });
         }
 
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
+        const hashedPassword = await bcrypt.hash(
+          password,
+          parseInt(process.env.SALT_ROUNDS),
+        );
 
         const result = await usersCollection.insertOne({
           name,
@@ -71,15 +72,20 @@ async function startServer() {
           createdAt: new Date(),
         });
 
-        // Generate JWT token
         const token = jwt.sign(
           { userId: result.insertedId, email },
           process.env.JWT_SECRET,
           { expiresIn: "1d" },
         );
 
+        resp.cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production", // true in production
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+
         resp.status(200).json({
-          token,
           success: true,
           message: "User registered successfully!",
           user: {
@@ -120,8 +126,14 @@ async function startServer() {
           { expiresIn: "1d" },
         );
 
+        resp.cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production", // true in production
+          sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+
         resp.status(200).json({
-          token,
           success: true,
           message: "Login successful!",
           user: {
@@ -135,25 +147,7 @@ async function startServer() {
       }
     });
 
-    function authenticateToken(req, res, next) {
-      const token = req.cookies.token;
-      if (!token)
-        return res
-          .status(401)
-          .json({ success: false, message: "No token provided!" });
-
-      jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err)
-          return res
-            .status(403)
-            .json({ success: false, message: "Invalid or expired token!" });
-        req.user = user;
-        next();
-      });
-    }
-
     // ---------- TASK ROUTES ----------
-
     app.get("/", authenticateToken, async (req, resp) => {
       const fetchTasks = await tasksCollection
         .find({ userId: req.user.userId })
