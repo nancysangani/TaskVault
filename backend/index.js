@@ -29,23 +29,6 @@ const client = new MongoClient(mongoUrl);
 let usersCollection;
 let tasksCollection;
 
-function authenticateToken(req, res, next) {
-  const token = req.cookies.token;
-  if (!token)
-    return res
-      .status(401)
-      .json({ success: false, message: "No token provided!" });
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err)
-      return res
-        .status(403)
-        .json({ success: false, message: "Invalid or expired token!" });
-    req.user = user;
-    next();
-  });
-}
-
 async function startServer() {
   try {
     const connection = await client.connect();
@@ -67,6 +50,7 @@ async function startServer() {
             .json({ success: false, message: "All fields are required" });
         }
 
+        // Check if user exists
         const existingUser = await usersCollection.findOne({ email });
         if (existingUser) {
           return resp.status(409).json({
@@ -75,10 +59,8 @@ async function startServer() {
           });
         }
 
-        const hashedPassword = await bcrypt.hash(
-          password,
-          parseInt(process.env.SALT_ROUNDS),
-        );
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
 
         const result = await usersCollection.insertOne({
           name,
@@ -89,20 +71,15 @@ async function startServer() {
           createdAt: new Date(),
         });
 
+        // Generate JWT token
         const token = jwt.sign(
           { userId: result.insertedId, email },
           process.env.JWT_SECRET,
           { expiresIn: "1d" },
         );
 
-        resp.cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-          maxAge: 24 * 60 * 60 * 1000,
-        });
-
         resp.status(200).json({
+          token,
           success: true,
           message: "User registered successfully!",
           user: {
@@ -114,7 +91,6 @@ async function startServer() {
           },
         });
       } catch (err) {
-        console.error("Signup error:", err);
         resp.status(500).json({ success: false, message: "Server error" });
       }
     });
@@ -144,14 +120,8 @@ async function startServer() {
           { expiresIn: "1d" },
         );
 
-        resp.cookie("token", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-          maxAge: 24 * 60 * 60 * 1000,
-        });
-
         resp.status(200).json({
+          token,
           success: true,
           message: "Login successful!",
           user: {
@@ -161,10 +131,26 @@ async function startServer() {
           },
         });
       } catch (err) {
-        console.error("Login error:", err);
         resp.status(500).json({ success: false, message: "Server error" });
       }
     });
+
+    function authenticateToken(req, res, next) {
+      const token = req.cookies.token;
+      if (!token)
+        return res
+          .status(401)
+          .json({ success: false, message: "No token provided!" });
+
+      jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err)
+          return res
+            .status(403)
+            .json({ success: false, message: "Invalid or expired token!" });
+        req.user = user;
+        next();
+      });
+    }
 
     // ---------- TASK ROUTES ----------
 
