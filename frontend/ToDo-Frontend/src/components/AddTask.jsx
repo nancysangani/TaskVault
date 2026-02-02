@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import API_URL from './../config.js';
 
 export default function AddTask() {
   const [taskData, setTaskData] = React.useState({
@@ -19,7 +20,7 @@ export default function AddTask() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    let tasks = await fetch("http://localhost:3000/add-task", {
+    let tasks = await fetch(`${API_URL}/add-task`, {
       method: "POST",
       credentials: "include",
       headers: {

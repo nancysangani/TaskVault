@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import API_URL from './../config.js';
 
 export default function Tasks() {
   const [tasks, setTasks] = React.useState([]);
@@ -16,7 +17,7 @@ export default function Tasks() {
   React.useEffect(() => {
     async function fetchTasks() {
       try {
-        let response = await fetch("http://localhost:3000/", {
+        let response = await fetch(`${API_URL}/`, {
           credentials: "include",
         });
 
@@ -41,7 +42,7 @@ export default function Tasks() {
   }, []);
 
   async function deleteTask(id) {
-    let response = await fetch(`http://localhost:3000/delete-task/${id}`, {
+    let response = await fetch(`${API_URL}/delete-task/${id}`, {
       method: "DELETE",
       credentials: "include",
     });

@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import API_URL from './../config.js';
 
 export default function UpdateTask() {
   const [updatedTask, setUpdatedTask] = React.useState({
@@ -12,7 +13,7 @@ export default function UpdateTask() {
 
   React.useEffect(() => {
     async function fetchTask() {
-      let response = await fetch(`http://localhost:3000/update-task/${id}`, {
+      let response = await fetch(`${API_URL}/update-task/${id}`, {
         credentials: "include",
       });
 
@@ -35,7 +36,7 @@ export default function UpdateTask() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    await fetch(`http://localhost:3000/update-task/${id}`, {
+    await fetch(`${API_URL}/update-task/${id}`, {
       method: "PUT",
       credentials: "include",
       headers: {

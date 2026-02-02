@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API_URL from './../config.js';
 
 export default function Login() {
   const [userData, setUserData] = React.useState({
@@ -28,7 +29,7 @@ export default function Login() {
 
   async function handleLogin(event) {
     event.preventDefault();
-    const response = await fetch("http://localhost:3000/log-in", {
+    const response = await fetch(`${API_URL}/log-in`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

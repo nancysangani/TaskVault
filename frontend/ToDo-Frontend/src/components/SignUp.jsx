@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import API_URL from './../config.js';
+
 export default function SignUp() {
   const initialFormState = {
     name: "",
@@ -35,7 +37,7 @@ export default function SignUp() {
   async function handleSignUp(event) {
     event.preventDefault();
 
-    const users = await fetch("http://localhost:3000/sign-up", {
+    const users = await fetch(`${API_URL}/sign-up`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
