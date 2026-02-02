@@ -29,6 +29,23 @@ const client = new MongoClient(mongoUrl);
 let usersCollection;
 let tasksCollection;
 
+function authenticateToken(req, res, next) {
+  const token = req.cookies.token;
+  if (!token)
+    return res
+      .status(401)
+      .json({ success: false, message: "No token provided!" });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err)
+      return res
+        .status(403)
+        .json({ success: false, message: "Invalid or expired token!" });
+    req.user = user;
+    next();
+  });
+}
+
 async function startServer() {
   try {
     const connection = await client.connect();
@@ -97,6 +114,7 @@ async function startServer() {
           },
         });
       } catch (err) {
+        console.error("Signup error:", err);
         resp.status(500).json({ success: false, message: "Server error" });
       }
     });
@@ -143,25 +161,10 @@ async function startServer() {
           },
         });
       } catch (err) {
+        console.error("Login error:", err);
         resp.status(500).json({ success: false, message: "Server error" });
       }
     });
-    function authenticateToken(req, res, next) {
-      const token = req.cookies.token;
-      if (!token)
-        return res
-          .status(401)
-          .json({ success: false, message: "No token provided!" });
-
-      jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err)
-          return res
-            .status(403)
-            .json({ success: false, message: "Invalid or expired token!" });
-        req.user = user;
-        next();
-      });
-    }
 
     // ---------- TASK ROUTES ----------
 
