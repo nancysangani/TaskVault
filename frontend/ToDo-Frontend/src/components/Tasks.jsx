@@ -78,7 +78,7 @@ export default function Tasks() {
       )}
 
       <ul className="task-list">
-        {tasks.length > 0 ? (
+        {tasks ? (
           tasks.map((task) => (
             <li className="task-item" key={task._id}>
               <div className="task-content">
