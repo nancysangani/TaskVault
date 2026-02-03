@@ -17,7 +17,7 @@ export default function Tasks() {
   React.useEffect(() => {
     async function fetchTasks() {
       try {
-        let response = await fetch(`${API_URL}`, {
+        let response = await fetch(`${API_URL}/tasks`, {
           credentials: "include",
         });
 

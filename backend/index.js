@@ -168,7 +168,7 @@ app.post("/log-in", async (req, resp) => {
 
 // ---------- TASK ROUTES ----------
 
-app.get("/", authenticateToken, async (req, resp) => {
+app.get("/tasks", authenticateToken, async (req, resp) => {
   const fetchTasks = await tasksCollection
     .find({ userId: req.user.userId })
     .toArray();

@@ -5,6 +5,10 @@
       "destination": "https://task-vault-lc9j.vercel.app/$1"
     },
     {
+      "source": "/api",
+      "destination": "https://task-vault-lc9j.vercel.app/"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
