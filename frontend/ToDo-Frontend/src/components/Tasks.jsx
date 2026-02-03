@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import API_URL from './../config.js';
+import API_URL from "./../config.js";
 
 export default function Tasks() {
   const [tasks, setTasks] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
   const location = useLocation();
   const [infoMessage, setInfoMessage] = React.useState("");
 
@@ -27,6 +28,7 @@ export default function Tasks() {
           console.error("Error fetching tasks:", errorText);
           setInfoMessage("Failed to load tasks. Please log in again.");
           setTasks([]);
+          setLoading(false);
           return;
         }
 
@@ -36,6 +38,8 @@ export default function Tasks() {
         console.error("Network error:", err);
         setInfoMessage("Network error while fetching tasks.");
         setTasks([]);
+      } finally {
+        setLoading(false);
       }
     }
     fetchTasks();
@@ -49,6 +53,15 @@ export default function Tasks() {
     let data = await response.json();
     console.log("Task deleted:", data);
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
+  }
+
+  if (loading) {
+    return (
+      <div className="container">
+        <h1>Tasks List</h1>
+        <p style={{ color: "gray", fontSize: "18px" }}>Loading tasks...</p>
+      </div>
+    );
   }
 
   return (
@@ -65,7 +78,7 @@ export default function Tasks() {
       )}
 
       <ul className="task-list">
-        {tasks ? (
+        {tasks.length > 0 ? (
           tasks.map((task) => (
             <li className="task-item" key={task._id}>
               <div className="task-content">
