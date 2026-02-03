@@ -34,7 +34,7 @@ export default function NavBar() {
   return (
     <>
       <nav>
-        <div className="logo">ToDo App</div>
+        <div className="logo">TaskVault</div>
         <ul>
           {login && (
             <>
