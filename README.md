@@ -287,8 +287,7 @@ This project is open source and available under the [MIT License](LICENSE).
 **Nancy Sangani**
 
 - GitHub: [@nancysangani](https://github.com/nancysangani)
-- LinkedIn: [Connect with me](https://linkedin.com/in/yourprofile)
-- Portfolio: [View my work](https://yourportfolio.com)
+- LinkedIn: [Connect with me](https://www.linkedin.com/in/nancy-sangani-a2938132b)
 
 ---
 
