@@ -306,25 +306,8 @@ This project is open source and available under the [MIT License](LICENSE).
 
 I'm open to feedback, collaborations, and opportunities!
 
-- **Email**: your.email@example.com
-- **LinkedIn**: [Nancy Sangani](https://linkedin.com/in/yourprofile)
-- **Portfolio**: [yourportfolio.com](https://yourportfolio.com)
-
----
-
-## 📸 Screenshots
-
-### Home Page
-
-![Home Page](path/to/screenshot1.png)
-
-### Task Management
-
-![Task Management](path/to/screenshot2.png)
-
-### Login/Signup
-
-![Authentication](path/to/screenshot3.png)
+- **Email**: nancysangani299@gmail.com
+- **LinkedIn**: [Nancy Sangani](https://www.linkedin.com/in/nancy-sangani-a2938132b)
 
 ---
 
