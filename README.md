@@ -100,6 +100,7 @@ TaskVault/
 │   ├── index.js                 # Express server & API routes
 │   ├── vercel.json              # Vercel deployment config
 │   ├── package.json
+│   ├── package-lock.json
 │   └── .env                     # Environment variables (gitignored)
 ├── frontend/
 │   └── ToDo-Frontend/
@@ -107,9 +108,15 @@ TaskVault/
 │       │   ├── components/      # React components (Login, Signup, Tasks, etc.)
 │       │   ├── config.js        # API configuration
 │       │   ├── App.jsx          # Main app component
+│       │   ├── main.jsx 
 │       │   └── index.css        # Global styles
 │       ├── vercel.json          # Vercel rewrites for routing
+│       ├── eslint.config.js
+│       ├── index.html
+│       ├── vite.config.js
+│       ├── package-lock.json
 │       └── package.json
+├── LICENSE
 └── README.md
 ```
 
